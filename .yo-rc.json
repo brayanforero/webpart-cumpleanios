@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.14.0",
+    "libraryName": "cco-webpart-birthday",
+    "libraryId": "2316c1eb-c828-45f4-b3c5-453e7449809a",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "cco-webpart-birthday",
+    "solutionShortDescription": "cco-webpart-birthday description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

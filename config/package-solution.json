@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "cco-webpart-birthday-client-side-solution",
+    "id": "2316c1eb-c828-45f4-b3c5-453e7449809a",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.14.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "cco-webpart-birthday description"
+      },
+      "longDescription": {
+        "default": "cco-webpart-birthday description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "cco-webpart-birthday Feature",
+        "description": "The feature that activates elements of the cco-webpart-birthday solution.",
+        "id": "3e666f43-450b-4338-9e2e-d40f7ca87df1",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/cco-webpart-birthday.sppkg"
+  }
+}
