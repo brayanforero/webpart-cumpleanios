@@ -2,7 +2,6 @@ import * as React from 'react';
 import styles from './HappyBirthdays.module.scss';
 import { IHappyBirthdaysProps } from './IHappyBirthdaysProps';
 // import { escape } from '@microsoft/sp-lodash-subset';
-// import { Web } from 'sp-pnp-js/lib/sharepoint/webs';
 import Webpart from './Webpart';
 
 // export default class HappyBirthdays extends React.Component<
@@ -37,6 +36,7 @@ function HappyBirthdays({
   userEmail,
 }: IHappyBirthdaysProps) {
   const user = { username: userDisplayName, email: userEmail };
+
   return (
     <section
       className={`${styles.happyBirthdays} ${

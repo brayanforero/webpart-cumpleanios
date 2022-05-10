@@ -3,18 +3,28 @@ import './Webpart.css';
 import { User } from './../../types';
 import Icon from './Icon';
 import Item from './Item';
-// import { Web } from 'sp-pnp-js/lib/sharepoint/webs';
 import useModal from '../../hooks/useModal';
 import useConfig from '../../hooks/useConfig';
+import * as moment from 'moment';
 interface Props {
   currentUser?: User;
 }
 function Webpart({ currentUser }: Props) {
   const { showable, handleShow, handleHide } = useModal();
-  const { isLoading, ifFail, configuration } = useConfig();
+  const { isLoading, fail, birthdays } = useConfig();
 
   if (isLoading) return <h2>Cargando...</h2>;
-  // if (ifFail) return <h2>Error: {ifFail}</h2>;
+  if (fail) return <h2>Error: {fail}</h2>;
+
+  //  cumples de hoy
+  const birthdayToday = birthdays.filter(i => {
+    return moment().format('DDMM') === moment(i.birthday).format('DDMM');
+  });
+
+  //  cumples siguientes
+  const nextBirthday = birthdays.filter(i => {
+    return moment().format('DDMM') !== moment(i.birthday).format('DDMM');
+  });
 
   return (
     <>
@@ -31,9 +41,18 @@ function Webpart({ currentUser }: Props) {
           <h2>Cumpleañeros del Mes</h2>
           <div className="webpart__birthdays">
             <h3>Hoy</h3>
-            <div className="webpart__items"></div>
+            <div className="webpart__items">
+              {birthdayToday.map(x => (
+                <Item person={x.person} date={x.birthday} />
+              ))}
+            </div>
+
             <h3>Siguientes</h3>
-            <div className="webpart__items"></div>
+            <div className="webpart__items">
+              {nextBirthday.map(x => (
+                <Item person={x.person} date={x.birthday} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

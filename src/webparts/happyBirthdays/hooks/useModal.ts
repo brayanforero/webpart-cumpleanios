@@ -8,7 +8,6 @@ const useModal = () => {
   };
 
   const handleHide = () => {
-    console.log('hide');
     setShow(false);
   };
 

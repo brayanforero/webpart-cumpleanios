@@ -1,32 +1,44 @@
 import { useState, useEffect } from 'react';
-import { getConfig } from '../services/webpartServices';
+import { getBirthdays } from '../services/webpartServices';
+import { Birthday } from '../types';
 
+interface HookState {
+  config: {
+    mainImage?: string;
+    bgCard?: string;
+    isBirthdayImage?: string;
+    birthdayImage?: string;
+  };
+  birthdays: Birthday[];
+}
 function useConfig() {
-  const [config, setConfig] = useState([]);
+  const [birthdays, setBirthdays] = useState<HookState['birthdays']>([]);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    getConfig()
-      .then(data => {
-        setConfig(data);
-        setLoading(false);
-      })
-      .catch(({ status, data }) => {
-        setLoading(false);
-        setError(data.responseBody['odata.error'].message.value);
-        console.log({
-          status,
-          data,
-        });
+  const fetchConfig = async () => {
+    try {
+      setLoading(true);
+      const data = await getBirthdays();
+      setBirthdays(data);
+      setLoading(false);
+    } catch ({ status, data }) {
+      setLoading(false);
+      setError(data.responseBody['odata.error'].message.value);
+      console.log({
+        status,
+        data,
       });
+    }
+  };
+  useEffect(() => {
+    fetchConfig();
   }, []);
 
   return {
     isLoading: loading,
-    ifFail: error,
-    configuration: config,
+    fail: error,
+    birthdays,
   };
 }
 
