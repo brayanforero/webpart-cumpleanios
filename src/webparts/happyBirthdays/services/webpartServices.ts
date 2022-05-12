@@ -1,5 +1,6 @@
 import { Web } from 'sp-pnp-js/lib/sharepoint/webs';
 import { BirthdaysResponse, Birthday } from '../types';
+import * as moment from 'moment';
 // import { Web } from '@pnp/sp/presets/all';
 const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/';
 const URL_CONFIG_LIST = 'Config';
@@ -13,13 +14,14 @@ export const getConfig = async () => {
 };
 
 export const getBirthdays = async (): Promise<Birthday[]> => {
+  const month = moment().format('MM');
+  const daysInMonth = moment().daysInMonth();
   const web = new Web(URL_SITE);
   const result = (await web.lists
     .getByTitle(URL_BIRTHDAYS_LIST)
     .items.select('ID', 'Title', 'Birthday', 'Email')
     .getAll()) as BirthdaysResponse;
 
-  console.log(result);
   const birthdays = result.map(item => {
     return {
       id: item.ID,
@@ -29,5 +31,10 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
     };
   });
 
-  return birthdays;
+  const birthdaysOnlyMonth = birthdays.filter(
+    i => moment(i.birthday).format('MM') == month
+  );
+
+  localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth));
+  return birthdaysOnlyMonth;
 };

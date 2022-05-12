@@ -6,9 +6,10 @@ interface Props {
   person: string;
   date?: Date;
   poster?: string;
+  selectable?: boolean;
 }
 
-function Item({ person, date }: Props) {
+function Item({ person, date, selectable = false }: Props) {
   return (
     <div className="item">
       <img src={IMAGE} alt="Happy Birthday Image" />
@@ -17,7 +18,7 @@ function Item({ person, date }: Props) {
         {moment(date).format('DD MMM')}
       </span>
 
-      <button>Felicitar</button>
+      {selectable && <button>Felicitar</button>}
     </div>
   );
 }

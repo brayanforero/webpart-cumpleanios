@@ -38,12 +38,12 @@ function Webpart({ currentUser }: Props) {
       <div className={`webpart-modal${showable ? ' show' : ''}`}>
         <div className="webpart-modal__body">
           <Icon onHide={handleHide} size={35} color="hsl(0, 50%, 50%)" />
-          <h2>Cumpleañeros del Mes</h2>
+          <h2>¡Cumpleañeros del Mes!</h2>
           <div className="webpart__birthdays">
             <h3>Hoy</h3>
             <div className="webpart__items">
               {birthdayToday.map(x => (
-                <Item person={x.person} date={x.birthday} />
+                <Item person={x.person} date={x.birthday} selectable />
               ))}
             </div>
 

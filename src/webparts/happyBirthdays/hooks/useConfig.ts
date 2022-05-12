@@ -19,6 +19,14 @@ function useConfig() {
   const fetchConfig = async () => {
     try {
       setLoading(true);
+      const localBirthdays = localStorage.getItem('birthdays');
+      if (localBirthdays) {
+        const parseBirthDays = JSON.parse(localBirthdays) as Birthday[];
+        setBirthdays(parseBirthDays);
+        setLoading(false);
+        return;
+      }
+
       const data = await getBirthdays();
       setBirthdays(data);
       setLoading(false);
