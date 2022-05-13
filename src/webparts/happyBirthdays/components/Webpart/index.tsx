@@ -23,7 +23,7 @@ function Webpart({ currentUser }: Props) {
 
   //  cumples siguientes
   const nextBirthday = birthdays.filter(i => {
-    return moment().format('DDMM') !== moment(i.birthday).format('DDMM');
+    return moment(i.birthday).format('DDMM') > moment().format('DDMM');
   });
 
   return (
