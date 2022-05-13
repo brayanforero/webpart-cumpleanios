@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "gulp serve",
-    "build": "gulp bundle --ship",
-    "pkg:generate": "gulp package-solution --ship",
+    "build": "gulp bundle",
+    "pkg:generate": "gulp bundle --ship && gulp package-solution --ship",
     "clean": "gulp clean",
     "test": "gulp test",
     "dev:setup": "spfx-fast-serve",

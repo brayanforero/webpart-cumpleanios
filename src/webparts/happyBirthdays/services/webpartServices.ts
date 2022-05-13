@@ -15,7 +15,6 @@ export const getConfig = async () => {
 
 export const getBirthdays = async (): Promise<Birthday[]> => {
   const month = moment().format('MM');
-  const daysInMonth = moment().daysInMonth();
   const web = new Web(URL_SITE);
   const result = (await web.lists
     .getByTitle(URL_BIRTHDAYS_LIST)
@@ -35,6 +34,5 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
     i => moment(i.birthday).format('MM') == month
   );
 
-  localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth));
   return birthdaysOnlyMonth;
 };
