@@ -40,19 +40,27 @@ function Webpart({ currentUser }: Props) {
           <Icon onHide={handleHide} size={35} color="hsl(0, 50%, 50%)" />
           <h2>¡Cumpleañeros del Mes!</h2>
           <div className="webpart__birthdays">
-            <h3>Hoy</h3>
-            <div className="webpart__items">
-              {birthdayToday.map(x => (
-                <Item person={x.person} date={x.birthday} selectable />
-              ))}
-            </div>
+            {birthdayToday.length > 0 && (
+              <>
+                <h3>Hoy</h3>
+                <div className="webpart__items">
+                  {birthdayToday.map(x => (
+                    <Item person={x.person} date={x.birthday} selectable />
+                  ))}
+                </div>
+              </>
+            )}
 
-            <h3>Siguientes</h3>
-            <div className="webpart__items">
-              {nextBirthday.map(x => (
-                <Item person={x.person} date={x.birthday} />
-              ))}
-            </div>
+            {nextBirthday.length > 0 && (
+              <>
+                <h3>Siguientes</h3>
+                <div className="webpart__items">
+                  {nextBirthday.map(x => (
+                    <Item person={x.person} date={x.birthday} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
