@@ -8,7 +8,9 @@
     "build": "gulp bundle --ship",
     "pkg:generate": "gulp package-solution --ship",
     "clean": "gulp clean",
-    "test": "gulp test"
+    "test": "gulp test",
+    "dev:setup": "spfx-fast-serve",
+    "serve": "gulp bundle --custom-serve --max_old_space_size=4096 && fast-serve"
   },
   "dependencies": {
     "@microsoft/sp-core-library": "1.14.0",
@@ -25,14 +27,16 @@
     "sp-pnp-js": "3.0.10"
   },
   "devDependencies": {
+    "@microsoft/rush-stack-compiler-3.9": "0.4.47",
+    "@microsoft/sp-build-web": "1.14.0",
+    "@microsoft/sp-module-interfaces": "1.14.0",
+    "@microsoft/sp-tslint-rules": "1.14.0",
     "@types/react": "16.9.51",
     "@types/react-dom": "16.9.8",
-    "@microsoft/sp-build-web": "1.14.0",
-    "@microsoft/sp-tslint-rules": "1.14.0",
-    "@microsoft/sp-module-interfaces": "1.14.0",
-    "@microsoft/rush-stack-compiler-3.9": "0.4.47",
-    "gulp": "~4.0.2",
+    "@types/webpack-env": "1.13.1",
     "ajv": "~5.2.2",
-    "@types/webpack-env": "1.13.1"
+    "gulp": "~4.0.2",
+    "spfx-fast-serve": "3.0.5",
+    "spfx-fast-serve-helpers": "1.14.7"
   }
 }
