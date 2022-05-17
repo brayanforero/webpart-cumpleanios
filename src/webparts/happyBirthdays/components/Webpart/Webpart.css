@@ -1,6 +1,6 @@
 .webpart {
-  width: 320px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -51,11 +51,13 @@ h3 {
   max-width: 1024px;
   height: 90%;
   padding: 1em 1.75em;
-  background-color: #fdfdfd;
+  background-color: #f2f2f2;
   border-radius: 0.25rem;
   overflow: hidden;
   text-align: center;
   box-shadow: 0px 2px 3px rgb(0 0 0 / 0.15);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .webpart-modal__body svg {
@@ -70,7 +72,6 @@ h3 {
   position: relative;
   width: 100%;
   height: 94%;
-  padding-top: 1.25em;
 }
 
 .webpart__items {
@@ -107,7 +108,7 @@ h3 {
 .item img {
   display: block;
   width: 100%;
-  height: 46%;
+  height: 50%;
   margin: 0;
   object-fit: cover;
 }
@@ -115,8 +116,10 @@ h3 {
 .item button {
   padding: 0.5em;
   border: none;
+  border-radius: 0.25em;
   background-color: hsl(130, 50%, 50%);
   color: #fff;
+  cursor: pointer;
 }
 
 .item--active {
