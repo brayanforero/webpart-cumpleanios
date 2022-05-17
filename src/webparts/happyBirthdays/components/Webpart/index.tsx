@@ -6,6 +6,7 @@ import Item from './Item';
 import useModal from '../../hooks/useModal';
 
 import * as moment from 'moment';
+import Form from './Form';
 interface Props {
   currentUser?: User;
   settings: Config;
@@ -73,6 +74,7 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
               </>
             )}
           </div>
+          <Form />
         </div>
       </div>
     </>

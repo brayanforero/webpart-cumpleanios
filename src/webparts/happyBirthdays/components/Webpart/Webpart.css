@@ -127,24 +127,36 @@ h3 {
   opacity: 1;
 }
 
-/* form {
-  padding: 0 1.25em;
+.webpart-modal__body form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25em 0 0 0.25em;
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  display: grid;
+  grid-template-columns: 40% auto;
+}
+
+.webpart-modal__body form div:nth-child(1) {
+  width: 100%;
+  padding: 2rem 1.25rem;
   display: flex;
   flex-direction: column;
-
-  overflow: auto;
-}
-form label {
-  text-align: left;
+  background-color: #f5f5f5;
 }
 
-form label,
+.webpart-modal__body form label,
 input,
 textarea {
+  text-align: left;
   margin-bottom: 1rem;
 }
 
-form input,
+.webpart-modal__body form input,
 textarea,
 button {
   padding: 0.75em 1em;
@@ -152,16 +164,20 @@ button {
   font-size: 1.05rem;
 }
 
-form textarea {
-  width: 100%;
-  height: 320px;
-  flex-shrink: 0 0 auto;
+.webpart-modal__body form textarea {
+  max-width: 100%;
+  max-height: 380px;
+  resize: none;
 }
 
-form button {
+.webpart-modal__body form button {
   border: none;
   border-radius: 0.25rem;
   background-color: hsl(130, 50%, 50%);
   color: #fff;
   cursor: pointer;
-} */
+  margin-bottom: 1.25rem;
+}
+.webpart-modal__body form button[type='button'] {
+  background-color: hsl(0, 50%, 50%);
+}
