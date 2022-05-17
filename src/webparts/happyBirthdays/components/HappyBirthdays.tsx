@@ -3,6 +3,7 @@ import styles from './HappyBirthdays.module.scss';
 import { IHappyBirthdaysProps } from './IHappyBirthdaysProps';
 // import { escape } from '@microsoft/sp-lodash-subset';
 import Webpart from './Webpart';
+import useConfig from './../hooks/useConfig';
 
 // export default class HappyBirthdays extends React.Component<
 //   IHappyBirthdaysProps,
@@ -35,6 +36,7 @@ function HappyBirthdays({
   userDisplayName,
   userEmail,
 }: IHappyBirthdaysProps) {
+  const { isLoading, fail, birthdays, settings } = useConfig();
   const user = { username: userDisplayName, email: userEmail };
 
   return (
@@ -43,7 +45,11 @@ function HappyBirthdays({
         hasTeamsContext ? styles.teams : ''
       }`}
     >
-      <Webpart currentUser={user} />
+      {isLoading && <h3>Cargando...</h3>}
+      {fail && <h3>Error: {fail}</h3>}
+      {settings && (
+        <Webpart settings={settings} birthdays={birthdays} currentUser={user} />
+      )}
     </section>
   );
 }
