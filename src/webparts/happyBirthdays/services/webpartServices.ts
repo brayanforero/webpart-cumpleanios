@@ -1,16 +1,37 @@
 import { Web } from 'sp-pnp-js/lib/sharepoint/webs';
-import { BirthdaysResponse, Birthday } from '../types';
+import { BirthdaysResponse, Birthday, ConfigResponse, Config } from '../types';
 import * as moment from 'moment';
 // import { Web } from '@pnp/sp/presets/all';
 const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/';
-const URL_CONFIG_LIST = 'Config';
+const URL_CONFIG_LIST = 'ConfigWebpart';
 const URL_BIRTHDAYS_LIST = 'Birthdays';
 const URL_MESSAGES_LIST = 'Congratulations';
 
-export const getConfig = async () => {
+export const getConfig = async (): Promise<Config> => {
   const web = new Web(URL_SITE);
-  const result = await web.lists.getByTitle(URL_CONFIG_LIST).items.getAll();
-  return result;
+  const result = (await web.lists
+    .getByTitle(URL_CONFIG_LIST)
+    .items.select(
+      'ID',
+      'Title',
+      'MainImage',
+      'CardBackground',
+      'CurrentBirthdayImage',
+      'NextBirthdayImage'
+    )
+    .top(1)
+    .get()) as ConfigResponse;
+
+  const [config] = result;
+
+  return {
+    id: config.ID,
+    title: config.Title,
+    mainImage: config.MainImage,
+    backgroundCard: config.CardBackground,
+    currentBirthdayImage: config.CurrentBirthdayImage,
+    nextBirthdayImage: config.NextBirthdayImage,
+  };
 };
 
 export const getBirthdays = async (): Promise<Birthday[]> => {

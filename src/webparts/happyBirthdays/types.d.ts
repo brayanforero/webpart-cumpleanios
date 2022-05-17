@@ -10,6 +10,15 @@ export interface Birthday {
   email: string;
 }
 
+export interface Config {
+  id?: number;
+  title: string;
+  mainImage?: string;
+  backgroundCard?: string;
+  currentBirthdayImage?: string;
+  nextBirthdayImage?: string;
+}
+
 export interface BirthdaysItemReponse {
   ID: number;
   Title: string;
@@ -17,4 +26,19 @@ export interface BirthdaysItemReponse {
   Email: string;
 }
 
+export interface ConfigItemResponse {
+  CardBackground: string;
+  CurrentBirthdayImage: string;
+  ID: number;
+  Id: number;
+  MainImage: string;
+  NextBirthdayImage: string;
+  Title: string;
+  'odata.editLink': string;
+  'odata.etag': string;
+  'odata.id': string;
+  'odata.type': string;
+}
+
 export type BirthdaysResponse = BirthdaysItemReponse[];
+export type ConfigResponse = ConfigItemResponse[];

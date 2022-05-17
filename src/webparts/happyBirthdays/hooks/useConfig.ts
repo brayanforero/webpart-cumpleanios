@@ -1,26 +1,23 @@
 import { useState, useEffect } from 'react';
-import { getBirthdays } from '../services/webpartServices';
-import { Birthday } from '../types';
+import { getBirthdays, getConfig } from '../services/webpartServices';
+import { Birthday, Config } from '../types';
 
 interface HookState {
-  config: {
-    mainImage?: string;
-    bgCard?: string;
-    isBirthdayImage?: string;
-    birthdayImage?: string;
-  };
+  config: Config;
   birthdays: Birthday[];
 }
 function useConfig() {
   const [birthdays, setBirthdays] = useState<HookState['birthdays']>([]);
+  const [config, setConfig] = useState<HookState['config']>(null);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchConfig = async () => {
     try {
       setLoading(true);
-
+      const config = await getConfig();
       const data = await getBirthdays();
+      setConfig(config);
       setBirthdays(data);
       setLoading(false);
     } catch ({ status, data }) {
@@ -32,6 +29,7 @@ function useConfig() {
       });
     }
   };
+
   useEffect(() => {
     fetchConfig();
   }, []);
@@ -40,6 +38,7 @@ function useConfig() {
     isLoading: loading,
     fail: error,
     birthdays,
+    settings: config,
   };
 }
 
