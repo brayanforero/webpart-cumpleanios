@@ -37,7 +37,7 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
     >
       <form onSubmit={handleSubmit}>
         <h3>
-          ¡Expresa tu mejores Deseseos
+          ¡Expresa tu mejores Deseos
           {birthdaySelected && ` a ${birthdaySelected.person}`}!
         </h3>
         <label htmlFor="message">Mensaje:</label>
