@@ -28,16 +28,19 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
 
   return (
     <>
-      <div onClick={handleShow} className="webpart">
+      <section onClick={handleShow} className="webpart">
         <img
           src={settings.mainImage}
           alt="happy birthday"
           className="webpart__banner"
         />
-      </div>
-      <div className={`webpart-modal${showable ? ' show' : ''}`}>
+      </section>
+      <section className={`webpart-modal${showable ? ' show' : ''}`}>
         <div
-          style={{ backgroundImage: `url("${settings.backgroundCard}")` }}
+          style={{
+            backgroundImage: `url("${settings.backgroundCard}")`,
+            display: 'none',
+          }}
           className="webpart-modal__body"
         >
           <Icon onHide={handleHide} size={35} color="hsl(0, 50%, 50%)" />
@@ -74,9 +77,9 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
               </>
             )}
           </div>
-          <Form />
         </div>
-      </div>
+        <Form background={settings.backgroundCard} />
+      </section>
     </>
   );
 }
