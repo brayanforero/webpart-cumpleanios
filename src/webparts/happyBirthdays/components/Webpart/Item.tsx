@@ -3,12 +3,22 @@ import * as React from 'react';
 import * as moment from 'moment';
 interface Props {
   person: string;
-  date?: Date;
-  poster?: string;
+  email: string;
+  date: Date;
+  poster: string;
   selectable?: boolean;
+  onSelect?: CallableFunction;
 }
 
-function Item({ person, date, poster, selectable = false }: Props) {
+function Item({ person, date, poster, onSelect, selectable = false }: Props) {
+  const handleSelect = React.useCallback(() => {
+    onSelect({
+      person,
+      date,
+      poster,
+    });
+  }, [person, date, poster]);
+
   return (
     <div className="item">
       <img src={poster} alt="Happy Birthday Image" />
@@ -17,7 +27,7 @@ function Item({ person, date, poster, selectable = false }: Props) {
         {moment(date).format('DD MMM')}
       </span>
 
-      {selectable && <button>Felicitar</button>}
+      {selectable && <button onClick={handleSelect}>Felicitar</button>}
     </div>
   );
 }

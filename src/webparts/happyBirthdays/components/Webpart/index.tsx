@@ -15,6 +15,18 @@ interface Props {
 
 function Webpart({ currentUser, settings, birthdays }: Props) {
   const { showable, handleShow, handleHide } = useModal();
+  const [itemSelected, setItemSelected] = React.useState<Birthday | null>(null);
+
+  const handleSelectedItem = React.useCallback(
+    (i: Birthday) => {
+      setItemSelected(i);
+    },
+    [setItemSelected]
+  );
+
+  const handleunSelectedItem = React.useCallback(() => {
+    setItemSelected(null);
+  }, [setItemSelected]);
 
   //  cumples de hoy
   const birthdayToday = birthdays.filter(i => {
@@ -39,7 +51,6 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
         <div
           style={{
             backgroundImage: `url("${settings.backgroundCard}")`,
-            display: 'none',
           }}
           className="webpart-modal__body"
         >
@@ -50,12 +61,14 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
               <>
                 <h3>Hoy</h3>
                 <div className="webpart__items">
-                  {birthdayToday.map(x => (
+                  {birthdayToday.map(b => (
                     <Item
-                      person={x.person}
+                      person={b.person}
                       poster={settings.currentBirthdayImage}
-                      date={x.birthday}
+                      date={b.birthday}
+                      email={b.email}
                       selectable
+                      onSelect={handleSelectedItem}
                     />
                   ))}
                 </div>
@@ -66,19 +79,24 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
               <>
                 <h3>Siguientes</h3>
                 <div className="webpart__items">
-                  {nextBirthday.map(x => (
+                  {nextBirthday.map(b => (
                     <Item
-                      person={x.person}
+                      person={b.person}
                       poster={settings.nextBirthdayImage}
-                      date={x.birthday}
+                      date={b.birthday}
+                      email={b.email}
                     />
                   ))}
                 </div>
               </>
             )}
           </div>
+          <Form
+            background={settings.backgroundCard}
+            birthdaySelected={itemSelected}
+            onCancel={handleunSelectedItem}
+          />
         </div>
-        <Form background={settings.backgroundCard} />
       </section>
     </>
   );
