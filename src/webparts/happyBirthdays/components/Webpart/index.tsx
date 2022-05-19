@@ -15,7 +15,7 @@ interface Props {
 
 function Webpart({ currentUser, settings, birthdays }: Props) {
   const { showable, handleShow, handleHide } = useModal();
-  const [itemSelected, setItemSelected] = React.useState<Birthday | null>(null);
+  const [itemSelected, setItemSelected] = React.useState<Birthday>(null);
 
   const handleSelectedItem = React.useCallback(
     (i: Birthday) => {

@@ -139,12 +139,14 @@ h3 {
   background-size: cover;
   display: grid;
   grid-template-columns: 40% auto;
-  transition: transform 420ms ease;
-  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms ease;
 }
 
 .webpart-modal__form.show {
-  transform: translateX(0);
+  opacity: 1;
+  pointer-events: initial;
 }
 
 .webpart-modal__form form {

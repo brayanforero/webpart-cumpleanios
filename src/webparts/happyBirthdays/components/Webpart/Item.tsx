@@ -10,14 +10,22 @@ interface Props {
   onSelect?: CallableFunction;
 }
 
-function Item({ person, date, poster, onSelect, selectable = false }: Props) {
+function Item({
+  person,
+  date,
+  poster,
+  email,
+  onSelect,
+  selectable = false,
+}: Props) {
   const handleSelect = React.useCallback(() => {
     onSelect({
       person,
       date,
       poster,
+      email,
     });
-  }, [person, date, poster]);
+  }, [person, poster, email]);
 
   return (
     <div className="item">
