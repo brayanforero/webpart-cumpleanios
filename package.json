@@ -24,7 +24,8 @@
     "office-ui-fabric-react": "7.174.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "sp-pnp-js": "3.0.10"
+    "sp-pnp-js": "3.0.10",
+    "sweetalert2": "11.4.17"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-3.9": "0.4.47",
