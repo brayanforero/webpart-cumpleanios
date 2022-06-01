@@ -5,6 +5,7 @@ import { IHappyBirthdaysProps } from './IHappyBirthdaysProps'
 import Webpart from './Webpart'
 import useConfig from './../hooks/useConfig'
 
+// DEFAULT COMPONENT
 // export default class HappyBirthdays extends React.Component<
 //   IHappyBirthdaysProps,
 //   {}
