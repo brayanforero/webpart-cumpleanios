@@ -1,45 +1,60 @@
-import * as React from 'react';
-import { Birthday } from './../../types';
-import './Webpart.css';
+import * as React from 'react'
+import { sendMessage } from '../../services/webpartServices'
+import { Birthday } from './../../types'
+import './Webpart.css'
 interface Props {
-  background: string;
-  birthdaySelected: Birthday;
-  onCancel: CallableFunction;
+  background: string
+  birthdaySelected: Birthday
+  onCancel: CallableFunction
 }
 
 interface FormState {
   message: {
-    text: string;
-    url: string;
-  };
+    text: string
+    url: string
+  }
 }
 
 const INITIAL_MESSAGE = {
   text: '',
   url: '',
-};
+}
 
 function Form({ background, birthdaySelected, onCancel }: Props) {
   const [message, setMessage] =
-    React.useState<FormState['message']>(INITIAL_MESSAGE);
+    React.useState<FormState['message']>(INITIAL_MESSAGE)
+  const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    console.log({ message, birthdaySelected });
+    const messageToSend = {
+      Title: birthdaySelected.email,
+      Message: message.text,
+      UrlImage: message.url,
+    }
 
-    reset();
-  };
+    setLoading(true)
+    sendMessage(messageToSend)
+      .then(res => {
+        setLoading(false)
+        reset()
+      })
+      .catch(err => {
+        setLoading(false)
+        console.log({ ...err })
+      })
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setMessage({ ...message, [e.target.name]: e.target.value });
-  };
+    setMessage({ ...message, [e.target.name]: e.target.value })
+  }
 
   const reset = () => {
-    setMessage(INITIAL_MESSAGE);
-  };
+    setMessage(INITIAL_MESSAGE)
+  }
 
   return (
     <section
@@ -55,9 +70,12 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
         </h3>
 
         <label htmlFor="text">Mensaje:</label>
-        <textarea onChange={handleChange} name="text" id="text">
-          {message.text}
-        </textarea>
+        <textarea
+          onChange={handleChange}
+          name="text"
+          id="text"
+          value={message.text}
+        />
         <label htmlFor="url">Url de la Imagen:</label>
         <input
           onChange={handleChange}
@@ -65,12 +83,12 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
           name="url"
           id="url"
           value={message.url}
-        ></input>
-        <button type="submit">Enviar</button>
+        />
+        <button type="submit">{loading ? 'Enviando...' : 'Enviar'}</button>
         <button
           onClick={() => {
-            onCancel();
-            reset();
+            onCancel()
+            reset()
           }}
           type="button"
         >
@@ -79,7 +97,7 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
       </form>
       {/* <div></div> */}
     </section>
-  );
+  )
 }
 
-export default Form;
+export default Form

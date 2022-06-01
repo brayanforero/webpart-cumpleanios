@@ -73,3 +73,15 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
 
   return birthdaysOnlyMonth
 }
+
+interface MessageListItem {
+  Title: string
+  Message: string
+  UrlImage: string
+}
+
+export const sendMessage = async (item: MessageListItem) => {
+  const web = new Web(URL_SITE)
+  const result = await web.lists.getByTitle(URL_MESSAGES_LIST).items.add(item)
+  return result.data
+}
