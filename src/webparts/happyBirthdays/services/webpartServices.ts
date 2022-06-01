@@ -1,14 +1,20 @@
-import { Web } from 'sp-pnp-js/lib/sharepoint/webs';
-import { BirthdaysResponse, Birthday, ConfigResponse, Config } from '../types';
-import * as moment from 'moment';
+import { Web } from 'sp-pnp-js/lib/sharepoint/webs'
+import { BirthdaysResponse, Birthday, ConfigResponse, Config } from '../types'
+import * as moment from 'moment'
 // import { Web } from '@pnp/sp/presets/all';
-const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/';
-const URL_CONFIG_LIST = 'ConfigWebpart';
-const URL_BIRTHDAYS_LIST = 'Birthdays';
-const URL_MESSAGES_LIST = 'Congratulations';
+const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/'
+const URL_CONFIG_LIST = 'ConfigWebpart'
+const URL_BIRTHDAYS_LIST = 'Birthdays'
+const URL_MESSAGES_LIST = 'Congratulations'
 
 export const getConfig = async (): Promise<Config> => {
-  const web = new Web(URL_SITE);
+  const localConfig = localStorage.getItem('config')
+
+  if (localConfig) {
+    return JSON.parse(localConfig) as Config
+  }
+
+  const web = new Web(URL_SITE)
   const result = (await web.lists
     .getByTitle(URL_CONFIG_LIST)
     .items.select(
@@ -20,27 +26,35 @@ export const getConfig = async (): Promise<Config> => {
       'NextBirthdayImage'
     )
     .top(1)
-    .get()) as ConfigResponse;
+    .get()) as ConfigResponse
 
-  const [config] = result;
-
-  return {
+  const [config] = result
+  const configToReturn = {
     id: config.ID,
     title: config.Title,
     mainImage: config.MainImage,
     backgroundCard: config.CardBackground,
     currentBirthdayImage: config.CurrentBirthdayImage,
     nextBirthdayImage: config.NextBirthdayImage,
-  };
-};
+  }
+  localStorage.setItem('config', JSON.stringify(configToReturn))
+
+  return configToReturn
+}
 
 export const getBirthdays = async (): Promise<Birthday[]> => {
-  const month = moment().format('MM');
-  const web = new Web(URL_SITE);
+  const localBirthdays = localStorage.getItem('birthdays')
+
+  if (localBirthdays) {
+    return JSON.parse(localBirthdays) as Birthday[]
+  }
+
+  const month = moment().format('MM')
+  const web = new Web(URL_SITE)
   const result = (await web.lists
     .getByTitle(URL_BIRTHDAYS_LIST)
     .items.select('ID', 'Title', 'Birthday', 'Email')
-    .getAll()) as BirthdaysResponse;
+    .getAll()) as BirthdaysResponse
 
   const birthdays = result.map(item => {
     return {
@@ -48,12 +62,14 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
       person: item.Title,
       birthday: item.Birthday,
       email: item.Email,
-    };
-  });
+    }
+  })
 
   const birthdaysOnlyMonth = birthdays.filter(
     i => moment(i.birthday).format('MM') == month
-  );
+  )
 
-  return birthdaysOnlyMonth;
-};
+  localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth))
+
+  return birthdaysOnlyMonth
+}
