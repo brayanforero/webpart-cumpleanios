@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { sendMessage } from '../../services/webpartServices'
 import { Birthday } from './../../types'
+import Swal from 'sweetalert2'
 import './Webpart.css'
 interface Props {
   background: string
@@ -39,10 +40,20 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
       .then(res => {
         setLoading(false)
         reset()
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: 'Tu me mensaje se ha enviado!',
+        })
       })
-      .catch(err => {
+      .catch(({ status, data }) => {
         setLoading(false)
-        console.log({ ...err })
+        Swal.fire({
+          icon: 'error',
+          title: `Ops... ${status}`,
+          text: `Error: ${data.responseBody['odata.error'].message.value}`,
+        })
+        console.log(data)
       })
   }
 
