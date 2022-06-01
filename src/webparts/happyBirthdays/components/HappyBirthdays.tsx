@@ -1,9 +1,9 @@
-import * as React from 'react';
-import styles from './HappyBirthdays.module.scss';
-import { IHappyBirthdaysProps } from './IHappyBirthdaysProps';
+import * as React from 'react'
+import styles from './HappyBirthdays.module.scss'
+import { IHappyBirthdaysProps } from './IHappyBirthdaysProps'
 // import { escape } from '@microsoft/sp-lodash-subset';
-import Webpart from './Webpart';
-import useConfig from './../hooks/useConfig';
+import Webpart from './Webpart'
+import useConfig from './../hooks/useConfig'
 
 // export default class HappyBirthdays extends React.Component<
 //   IHappyBirthdaysProps,
@@ -36,8 +36,19 @@ function HappyBirthdays({
   userDisplayName,
   userEmail,
 }: IHappyBirthdaysProps) {
-  const { isLoading, fail, birthdays, settings } = useConfig();
-  const user = { username: userDisplayName, email: userEmail };
+  const { isLoading, fail, birthdays, settings } = useConfig()
+  const user = { username: userDisplayName, email: userEmail }
+
+  React.useEffect(() => {
+    const invertalID = setInterval(() => {
+      localStorage.removeItem('config')
+      localStorage.removeItem('birthdays')
+    }, 1000 * 60 * 10)
+
+    return () => {
+      clearInterval(invertalID)
+    }
+  }, [])
 
   return (
     <section
@@ -51,7 +62,7 @@ function HappyBirthdays({
         <Webpart settings={settings} birthdays={birthdays} currentUser={user} />
       )}
     </section>
-  );
+  )
 }
 
-export default HappyBirthdays;
+export default HappyBirthdays
