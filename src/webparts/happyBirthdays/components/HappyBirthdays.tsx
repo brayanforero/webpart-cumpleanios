@@ -49,25 +49,28 @@ function HappyBirthdays({
 
     return () => {
       clearInterval(invertalID)
+      clearLocalData()
     }
   }, [])
 
   return (
-    <section
-      className={`${styles.happyBirthdays} ${
-        hasTeamsContext ? styles.teams : ''
-      }`}
-    >
-      {isLoading && <h3>Cargando...</h3>}
-      {fail && <h3>Error: {fail}</h3>}
-      {settings && (
-        <WebpartContextProvider
-          data={{ birthdays, user, config: settings, gallery }}
-        >
-          <Webpart />
-        </WebpartContextProvider>
-      )}
-    </section>
+    <React.StrictMode>
+      <section
+        className={`${styles.happyBirthdays} ${
+          hasTeamsContext ? styles.teams : ''
+        }`}
+      >
+        {isLoading && <h3>Cargando...</h3>}
+        {fail && <h3>Error: {fail}</h3>}
+        {settings && (
+          <WebpartContextProvider
+            data={{ birthdays, user, config: settings, gallery }}
+          >
+            <Webpart />
+          </WebpartContextProvider>
+        )}
+      </section>
+    </React.StrictMode>
   )
 }
 
