@@ -3,6 +3,7 @@ import { sendMessage } from '../../services/webpartServices'
 import { Birthday } from './../../types'
 import Swal from 'sweetalert2'
 import './Webpart.css'
+import useForm from '../../hooks/useForm'
 interface Props {
   background: string
   birthdaySelected: Birthday
@@ -25,7 +26,7 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
   const [message, setMessage] =
     React.useState<FormState['message']>(INITIAL_MESSAGE)
   const [loading, setLoading] = React.useState(false)
-
+  const { isLoading, fail, images } = useForm()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -106,7 +107,16 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
           Cancelar
         </button>
       </form>
-      {/* <div></div> */}
+      <div className="webpart-modal__gallery">
+        {images.map(i => (
+          <img
+            width={120}
+            height={120}
+            src={i.Title}
+            alt="Happy birthdya images"
+          />
+        ))}
+      </div>
     </section>
   )
 }

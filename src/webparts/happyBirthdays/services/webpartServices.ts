@@ -12,6 +12,7 @@ const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/'
 const URL_CONFIG_LIST = 'ConfigWebpart'
 const URL_BIRTHDAYS_LIST = 'Birthdays'
 const URL_MESSAGES_LIST = 'Congratulations'
+const URL_IMAGES_LIST = 'ConfigImages'
 
 export const getConfig = async (): Promise<Config> => {
   const localConfig = localStorage.getItem('config')
@@ -78,6 +79,16 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
   localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth))
 
   return birthdaysOnlyMonth
+}
+
+export const getImages = async () => {
+  const web = new Web(URL_SITE)
+  const result = await web.lists
+    .getByTitle(URL_IMAGES_LIST)
+    .items.select('ID', 'Title')
+    .getAll()
+
+  return result
 }
 
 export const sendMessage = async (item: MessageListItem) => {

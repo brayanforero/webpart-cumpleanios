@@ -196,3 +196,17 @@ button {
 .webpart-modal__form button[type='button'] {
   background-color: hsl(0, 40%, 50%);
 }
+
+.webpart-modal__gallery {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.webpart-modal__gallery img {
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 0;
+}
