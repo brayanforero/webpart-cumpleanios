@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { sendMessage } from '../../services/webpartServices'
-import { Birthday } from './../../types'
+import { Birthday, Image } from './../../types'
 import Swal from 'sweetalert2'
 import './Webpart.css'
-import useForm from '../../hooks/useForm'
 import { CONTEXT } from '../../context/global'
 interface Props {
   birthdaySelected: Birthday
@@ -26,8 +25,9 @@ function Form({ birthdaySelected, onCancel }: Props) {
   const [message, setMessage] =
     React.useState<FormState['message']>(INITIAL_MESSAGE)
   const [loading, setLoading] = React.useState(false)
+  const [imageSelected, setImageSelected] = React.useState<Image>(null)
   const { config, gallery } = React.useContext(CONTEXT)
-
+  const elementRef = React.useRef<number>(0)
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -41,12 +41,12 @@ function Form({ birthdaySelected, onCancel }: Props) {
     sendMessage(messageToSend)
       .then(res => {
         setLoading(false)
-        reset()
         Swal.fire({
           icon: 'success',
           title: 'Exito',
           text: 'Tu me mensaje se ha enviado!',
         })
+        reset()
       })
       .catch(({ status, data }) => {
         setLoading(false)
@@ -66,7 +66,15 @@ function Form({ birthdaySelected, onCancel }: Props) {
   }
 
   const reset = () => {
+    elementRef.current = 0
     setMessage(INITIAL_MESSAGE)
+    setImageSelected(null)
+  }
+
+  const handleSelect = (i: Image) => {
+    elementRef.current = i.id
+    setImageSelected(i)
+    setMessage({ ...message, url: i.url })
   }
 
   return (
@@ -111,10 +119,12 @@ function Form({ birthdaySelected, onCancel }: Props) {
       <div className="webpart-modal__gallery">
         {gallery.map(i => (
           <img
-            width={120}
-            height={120}
-            src={i.url}
             alt="Happy birthdya images"
+            height={120}
+            onClick={() => handleSelect(i)}
+            src={i.url}
+            width={120}
+            className={i.id === elementRef.current ? 'selected' : ''}
           />
         ))}
       </div>
