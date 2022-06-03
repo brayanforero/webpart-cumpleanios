@@ -21,10 +21,10 @@ function useConfig() {
   const fetchConfig = async () => {
     try {
       setLoading(true);
-      const config = await getConfig();
+      const configFromApi = await getConfig();
       const data = await getBirthdays();
       const images = await getImages();
-      setConfig(config);
+      setConfig(configFromApi);
       setBirthdays(data);
       setGallery(images);
       setLoading(false);
