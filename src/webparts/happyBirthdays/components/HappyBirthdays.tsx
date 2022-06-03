@@ -4,6 +4,7 @@ import { IHappyBirthdaysProps } from './IHappyBirthdaysProps'
 // import { escape } from '@microsoft/sp-lodash-subset';
 import Webpart from './Webpart'
 import useConfig from './../hooks/useConfig'
+import WebpartContextProvider from '../context/global'
 
 // DEFAULT COMPONENT
 // export default class HappyBirthdays extends React.Component<
@@ -60,7 +61,9 @@ function HappyBirthdays({
       {isLoading && <h3>Cargando...</h3>}
       {fail && <h3>Error: {fail}</h3>}
       {settings && (
-        <Webpart settings={settings} birthdays={birthdays} currentUser={user} />
+        <WebpartContextProvider data={{ birthdays, user, config: settings }}>
+          <Webpart />
+        </WebpartContextProvider>
       )}
     </section>
   )

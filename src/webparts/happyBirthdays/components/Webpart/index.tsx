@@ -1,48 +1,44 @@
-import * as React from 'react';
-import './Webpart.css';
-import { Birthday, Config, User } from './../../types';
-import Icon from './Icon';
-import Item from './Item';
-import useModal from '../../hooks/useModal';
+import * as React from 'react'
+import './Webpart.css'
+import { Birthday, Config, User } from './../../types'
+import Icon from './Icon'
+import Item from './Item'
+import useModal from '../../hooks/useModal'
 
-import * as moment from 'moment';
-import Form from './Form';
-interface Props {
-  currentUser?: User;
-  settings: Config;
-  birthdays: Birthday[];
-}
+import * as moment from 'moment'
+import Form from './Form'
+import { CONTEXT } from '../../context/global'
 
-function Webpart({ currentUser, settings, birthdays }: Props) {
-  const { showable, handleShow, handleHide } = useModal();
-  const [itemSelected, setItemSelected] = React.useState<Birthday>(null);
-
+function Webpart() {
+  const { showable, handleShow, handleHide } = useModal()
+  const [itemSelected, setItemSelected] = React.useState<Birthday>(null)
+  const { birthdays, config } = React.useContext(CONTEXT)
   const handleSelectedItem = React.useCallback(
     (i: Birthday) => {
-      setItemSelected(i);
+      setItemSelected(i)
     },
     [setItemSelected]
-  );
+  )
 
   const handleunSelectedItem = React.useCallback(() => {
-    setItemSelected(null);
-  }, [setItemSelected]);
+    setItemSelected(null)
+  }, [setItemSelected])
 
   //  cumples de hoy
   const birthdayToday = birthdays.filter(i => {
-    return moment().format('DDMM') === moment(i.birthday).format('DDMM');
-  });
+    return moment().format('DDMM') === moment(i.birthday).format('DDMM')
+  })
 
   //  cumples siguientes
   const nextBirthday = birthdays.filter(i => {
-    return moment(i.birthday).format('DDMM') > moment().format('DDMM');
-  });
+    return moment(i.birthday).format('DDMM') > moment().format('DDMM')
+  })
 
   return (
     <>
       <section onClick={handleShow} className="webpart">
         <img
-          src={settings.mainImage}
+          src={config.mainImage}
           alt="happy birthday"
           className="webpart__banner"
         />
@@ -50,7 +46,7 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
       <section className={`webpart-modal${showable ? ' show' : ''}`}>
         <div
           style={{
-            backgroundImage: `url("${settings.backgroundCard}")`,
+            backgroundImage: `url("${config.backgroundCard}")`,
           }}
           className="webpart-modal__body"
         >
@@ -64,7 +60,7 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
                   {birthdayToday.map(b => (
                     <Item
                       person={b.person}
-                      poster={settings.currentBirthdayImage}
+                      poster={config.currentBirthdayImage}
                       date={b.birthday}
                       email={b.email}
                       selectable
@@ -82,7 +78,7 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
                   {nextBirthday.map(b => (
                     <Item
                       person={b.person}
-                      poster={settings.nextBirthdayImage}
+                      poster={config.nextBirthdayImage}
                       date={b.birthday}
                       email={b.email}
                     />
@@ -92,14 +88,14 @@ function Webpart({ currentUser, settings, birthdays }: Props) {
             )}
           </div>
           <Form
-            background={settings.backgroundCard}
+            background={config.backgroundCard}
             birthdaySelected={itemSelected}
             onCancel={handleunSelectedItem}
           />
         </div>
       </section>
     </>
-  );
+  )
 }
 
-export default Webpart;
+export default Webpart
