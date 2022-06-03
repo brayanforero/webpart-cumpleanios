@@ -4,8 +4,8 @@ import { Birthday } from './../../types'
 import Swal from 'sweetalert2'
 import './Webpart.css'
 import useForm from '../../hooks/useForm'
+import { CONTEXT } from '../../context/global'
 interface Props {
-  background: string
   birthdaySelected: Birthday
   onCancel: CallableFunction
 }
@@ -22,11 +22,12 @@ const INITIAL_MESSAGE = {
   url: '',
 }
 
-function Form({ background, birthdaySelected, onCancel }: Props) {
+function Form({ birthdaySelected, onCancel }: Props) {
   const [message, setMessage] =
     React.useState<FormState['message']>(INITIAL_MESSAGE)
   const [loading, setLoading] = React.useState(false)
-  const { isLoading, fail, images } = useForm()
+  const { config, gallery } = React.useContext(CONTEXT)
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -71,7 +72,7 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
   return (
     <section
       style={{
-        backgroundImage: `url("${background}")`,
+        backgroundImage: `url("${config.backgroundCard}")`,
       }}
       className={`webpart-modal__form ${birthdaySelected ? 'show' : ''}`}
     >
@@ -108,11 +109,11 @@ function Form({ background, birthdaySelected, onCancel }: Props) {
         </button>
       </form>
       <div className="webpart-modal__gallery">
-        {images.map(i => (
+        {gallery.map(i => (
           <img
             width={120}
             height={120}
-            src={i.Title}
+            src={i.url}
             alt="Happy birthdya images"
           />
         ))}
