@@ -1,38 +1,38 @@
-import * as React from 'react'
-import './Webpart.css'
-import { Birthday, Config, User } from './../../types'
-import Icon from './Icon'
-import Item from './Item'
-import useModal from '../../hooks/useModal'
+import * as React from 'react';
+import './Webpart.css';
+import { Birthday } from './../../types';
+import Icon from './Icon';
+import Item from './Item';
+import useModal from '../../hooks/useModal';
 
-import * as moment from 'moment'
-import Form from './Form'
-import { CONTEXT } from '../../context/global'
+import * as moment from 'moment';
+import Form from './Form';
+import { CONTEXT } from '../../context/global';
 
 function Webpart() {
-  const { showable, handleShow, handleHide } = useModal()
-  const [itemSelected, setItemSelected] = React.useState<Birthday>(null)
-  const { birthdays, config } = React.useContext(CONTEXT)
+  const { showable, handleShow, handleHide } = useModal();
+  const [itemSelected, setItemSelected] = React.useState<Birthday>(null);
+  const { birthdays, config } = React.useContext(CONTEXT);
   const handleSelectedItem = React.useCallback(
     (i: Birthday) => {
-      setItemSelected(i)
+      setItemSelected(i);
     },
     [setItemSelected]
-  )
+  );
 
   const handleunSelectedItem = React.useCallback(() => {
-    setItemSelected(null)
-  }, [setItemSelected])
+    setItemSelected(null);
+  }, [setItemSelected]);
 
   //  cumples de hoy
   const birthdayToday = birthdays.filter(i => {
-    return moment().format('DDMM') === moment(i.birthday).format('DDMM')
-  })
+    return moment().format('DDMM') === moment(i.birthday).format('DDMM');
+  });
 
   //  cumples siguientes
   const nextBirthday = birthdays.filter(i => {
-    return moment(i.birthday).format('DDMM') > moment().format('DDMM')
-  })
+    return moment(i.birthday).format('DDMM') > moment().format('DDMM');
+  });
 
   return (
     <>
@@ -94,7 +94,7 @@ function Webpart() {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default Webpart
+export default Webpart;

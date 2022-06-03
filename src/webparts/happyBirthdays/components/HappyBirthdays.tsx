@@ -1,11 +1,11 @@
-import * as React from 'react'
-import styles from './HappyBirthdays.module.scss'
-import { IHappyBirthdaysProps } from './IHappyBirthdaysProps'
+import * as React from 'react';
+import styles from './HappyBirthdays.module.scss';
+import { IHappyBirthdaysProps } from './IHappyBirthdaysProps';
 // import { escape } from '@microsoft/sp-lodash-subset';
-import Webpart from './Webpart'
-import useConfig from './../hooks/useConfig'
-import WebpartContextProvider from '../context/global'
-import { clearLocalData } from '../utils'
+import Webpart from './Webpart';
+import useConfig from './../hooks/useConfig';
+import WebpartContextProvider from '../context/global';
+import { clearLocalData } from '../utils';
 
 // DEFAULT COMPONENT
 // export default class HappyBirthdays extends React.Component<
@@ -39,19 +39,19 @@ function HappyBirthdays({
   userDisplayName,
   userEmail,
 }: IHappyBirthdaysProps) {
-  const { isLoading, fail, birthdays, settings, gallery } = useConfig()
-  const user = { username: userDisplayName, email: userEmail }
+  const { isLoading, fail, birthdays, settings, gallery } = useConfig();
+  const user = { username: userDisplayName, email: userEmail };
 
   React.useEffect(() => {
     const invertalID = setInterval(() => {
-      clearLocalData()
-    }, 1000 * 60 * 10)
+      clearLocalData();
+    }, 1000 * 60 * 10);
 
     return () => {
-      clearInterval(invertalID)
-      clearLocalData()
-    }
-  }, [])
+      clearInterval(invertalID);
+      clearLocalData();
+    };
+  }, []);
 
   return (
     <React.StrictMode>
@@ -71,7 +71,7 @@ function HappyBirthdays({
         )}
       </section>
     </React.StrictMode>
-  )
+  );
 }
 
-export default HappyBirthdays
+export default HappyBirthdays;

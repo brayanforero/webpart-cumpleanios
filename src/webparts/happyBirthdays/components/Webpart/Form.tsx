@@ -1,81 +1,81 @@
-import * as React from 'react'
-import { sendMessage } from '../../services/webpartServices'
-import { Birthday, Image } from './../../types'
-import Swal from 'sweetalert2'
-import './Webpart.css'
-import { CONTEXT } from '../../context/global'
+import * as React from 'react';
+import { sendMessage } from '../../services/webpartServices';
+import { Birthday, Image } from './../../types';
+import Swal from 'sweetalert2';
+import './Webpart.css';
+import { CONTEXT } from '../../context/global';
 interface Props {
-  birthdaySelected: Birthday
-  onCancel: CallableFunction
+  birthdaySelected: Birthday;
+  onCancel: CallableFunction;
 }
 
 interface FormState {
   message: {
-    text: string
-    url: string
-  }
+    text: string;
+    url: string;
+  };
 }
 
 const INITIAL_MESSAGE = {
   text: '',
   url: '',
-}
+};
 
 function Form({ birthdaySelected, onCancel }: Props) {
   const [message, setMessage] =
-    React.useState<FormState['message']>(INITIAL_MESSAGE)
-  const [loading, setLoading] = React.useState(false)
-  const [imageSelected, setImageSelected] = React.useState<Image>(null)
-  const { config, gallery } = React.useContext(CONTEXT)
-  const elementRef = React.useRef<number>(0)
+    React.useState<FormState['message']>(INITIAL_MESSAGE);
+  const [loading, setLoading] = React.useState(false);
+  const [imageSelected, setImageSelected] = React.useState<Image>(null);
+  const { config, gallery } = React.useContext(CONTEXT);
+  const elementRef = React.useRef<number>(0);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const messageToSend = {
       Title: birthdaySelected.email,
       Message: message.text,
       UrlImage: message.url,
-    }
+    };
 
-    setLoading(true)
+    setLoading(true);
     sendMessage(messageToSend)
       .then(res => {
-        setLoading(false)
+        setLoading(false);
         Swal.fire({
           icon: 'success',
           title: 'Exito',
           text: 'Tu me mensaje se ha enviado!',
-        })
-        reset()
+        });
+        reset();
       })
       .catch(({ status, data }) => {
-        setLoading(false)
+        setLoading(false);
         Swal.fire({
           icon: 'error',
           title: `Ops... ${status}`,
           text: `Error: ${data.responseBody['odata.error'].message.value}`,
-        })
-        console.log(data)
-      })
-  }
+        });
+        console.log(data);
+      });
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setMessage({ ...message, [e.target.name]: e.target.value })
-  }
+    setMessage({ ...message, [e.target.name]: e.target.value });
+  };
 
   const reset = () => {
-    elementRef.current = 0
-    setMessage(INITIAL_MESSAGE)
-    setImageSelected(null)
-  }
+    elementRef.current = 0;
+    setMessage(INITIAL_MESSAGE);
+    setImageSelected(null);
+  };
 
   const handleSelect = (i: Image) => {
-    elementRef.current = i.id
-    setImageSelected(i)
-    setMessage({ ...message, url: i.url })
-  }
+    elementRef.current = i.id;
+    setImageSelected(i);
+    setMessage({ ...message, url: i.url });
+  };
 
   return (
     <section
@@ -108,8 +108,8 @@ function Form({ birthdaySelected, onCancel }: Props) {
         <button type="submit">{loading ? 'Enviando...' : 'Enviar'}</button>
         <button
           onClick={() => {
-            onCancel()
-            reset()
+            onCancel();
+            reset();
           }}
           type="button"
         >
@@ -129,7 +129,7 @@ function Form({ birthdaySelected, onCancel }: Props) {
         ))}
       </div>
     </section>
-  )
+  );
 }
 
-export default Form
+export default Form;

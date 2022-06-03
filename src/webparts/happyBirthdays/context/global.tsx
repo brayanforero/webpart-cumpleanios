@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { Birthday, Config, Image, User } from '../types'
+import * as React from 'react';
+import { Birthday, Config, Image, User } from '../types';
 
 interface ContextWebpart {
-  user: User
-  config: Config
-  birthdays: Birthday[]
-  gallery: Image[]
+  user: User;
+  config: Config;
+  birthdays: Birthday[];
+  gallery: Image[];
 }
 
 const DEFAULT_CONTEXT: ContextWebpart = {
@@ -13,17 +13,17 @@ const DEFAULT_CONTEXT: ContextWebpart = {
   config: null,
   birthdays: [],
   gallery: [],
-}
+};
 
-export const CONTEXT = React.createContext<ContextWebpart>(DEFAULT_CONTEXT)
+export const CONTEXT = React.createContext<ContextWebpart>(DEFAULT_CONTEXT);
 
 interface Prop {
-  data: ContextWebpart
-  children: React.ReactNode
+  data: ContextWebpart;
+  children: React.ReactNode;
 }
 
 function WebpartContextProvider({ children, data }: Prop) {
-  return <CONTEXT.Provider value={data}>{children}</CONTEXT.Provider>
+  return <CONTEXT.Provider value={data}>{children}</CONTEXT.Provider>;
 }
 
-export default WebpartContextProvider
+export default WebpartContextProvider;
