@@ -88,7 +88,6 @@ function Webpart() {
             )}
           </div>
           <Form
-            background={config.backgroundCard}
             birthdaySelected={itemSelected}
             onCancel={handleunSelectedItem}
           />
