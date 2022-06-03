@@ -5,6 +5,7 @@ import { IHappyBirthdaysProps } from './IHappyBirthdaysProps'
 import Webpart from './Webpart'
 import useConfig from './../hooks/useConfig'
 import WebpartContextProvider from '../context/global'
+import { clearLocalData } from '../utils'
 
 // DEFAULT COMPONENT
 // export default class HappyBirthdays extends React.Component<
@@ -38,13 +39,12 @@ function HappyBirthdays({
   userDisplayName,
   userEmail,
 }: IHappyBirthdaysProps) {
-  const { isLoading, fail, birthdays, settings } = useConfig()
+  const { isLoading, fail, birthdays, settings, gallery } = useConfig()
   const user = { username: userDisplayName, email: userEmail }
 
   React.useEffect(() => {
     const invertalID = setInterval(() => {
-      localStorage.removeItem('config')
-      localStorage.removeItem('birthdays')
+      clearLocalData()
     }, 1000 * 60 * 10)
 
     return () => {
@@ -61,7 +61,9 @@ function HappyBirthdays({
       {isLoading && <h3>Cargando...</h3>}
       {fail && <h3>Error: {fail}</h3>}
       {settings && (
-        <WebpartContextProvider data={{ birthdays, user, config: settings }}>
+        <WebpartContextProvider
+          data={{ birthdays, user, config: settings, gallery }}
+        >
           <Webpart />
         </WebpartContextProvider>
       )}

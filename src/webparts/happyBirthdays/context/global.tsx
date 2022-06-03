@@ -1,19 +1,21 @@
 import * as React from 'react'
-import { Birthday, Config, User } from '../types'
+import { Birthday, Config, Image, User } from '../types'
 
 interface ContextWebpart {
   user: User
   config: Config
   birthdays: Birthday[]
+  gallery: Image[]
 }
 
-const INITIAL_CONTEXT: ContextWebpart = {
+const DEFAULT_CONTEXT: ContextWebpart = {
   user: null,
   config: null,
   birthdays: [],
+  gallery: [],
 }
 
-export const CONTEXT = React.createContext<ContextWebpart>(INITIAL_CONTEXT)
+export const CONTEXT = React.createContext<ContextWebpart>(DEFAULT_CONTEXT)
 
 interface Prop {
   data: ContextWebpart

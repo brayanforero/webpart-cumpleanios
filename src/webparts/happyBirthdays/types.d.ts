@@ -9,6 +9,10 @@ export interface Birthday {
   birthday: Date
   email: string
 }
+export interface Image {
+  id?: number
+  url: string
+}
 
 export interface Config {
   id?: number
@@ -46,5 +50,11 @@ export interface MessageListItem {
   UrlImage: string
 }
 
+export interface ImageItemList {
+  ID: number
+  Title: string
+}
+
 export type BirthdaysResponse = BirthdaysItemReponse[]
 export type ConfigResponse = ConfigItemResponse[]
+export type ImagesResponse = ImageItemList[]
