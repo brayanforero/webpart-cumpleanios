@@ -1,5 +1,11 @@
 import { Web } from 'sp-pnp-js/lib/sharepoint/webs'
-import { BirthdaysResponse, Birthday, ConfigResponse, Config } from '../types'
+import {
+  BirthdaysResponse,
+  Birthday,
+  ConfigResponse,
+  Config,
+  MessageListItem,
+} from '../types'
 import * as moment from 'moment'
 // import { Web } from '@pnp/sp/presets/all';
 const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/'
@@ -72,12 +78,6 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
   localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth))
 
   return birthdaysOnlyMonth
-}
-
-interface MessageListItem {
-  Title: string
-  Message: string
-  UrlImage: string
 }
 
 export const sendMessage = async (item: MessageListItem) => {
