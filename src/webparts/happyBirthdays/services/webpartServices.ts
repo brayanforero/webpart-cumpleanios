@@ -5,8 +5,15 @@ import {
   ConfigResponse,
   Config,
   MessageListItem,
+  ImagesResponse,
+  Image,
 } from '../types'
 import * as moment from 'moment'
+import {
+  KEY_LOCAL_BIRTHDAYS,
+  KEY_LOCAL_CONFIG,
+  KEY_LOCAL_GALLERY,
+} from '../utils'
 // import { Web } from '@pnp/sp/presets/all';
 const URL_SITE = 'https://devfor.sharepoint.com/sites/SiteBD/'
 const URL_CONFIG_LIST = 'ConfigWebpart'
@@ -15,7 +22,7 @@ const URL_MESSAGES_LIST = 'Congratulations'
 const URL_IMAGES_LIST = 'ConfigImages'
 
 export const getConfig = async (): Promise<Config> => {
-  const localConfig = localStorage.getItem('config')
+  const localConfig = localStorage.getItem(KEY_LOCAL_CONFIG)
 
   if (localConfig) {
     return JSON.parse(localConfig) as Config
@@ -44,13 +51,13 @@ export const getConfig = async (): Promise<Config> => {
     currentBirthdayImage: config.CurrentBirthdayImage,
     nextBirthdayImage: config.NextBirthdayImage,
   }
-  localStorage.setItem('config', JSON.stringify(configToReturn))
+  localStorage.setItem(KEY_LOCAL_CONFIG, JSON.stringify(configToReturn))
 
   return configToReturn
 }
 
 export const getBirthdays = async (): Promise<Birthday[]> => {
-  const localBirthdays = localStorage.getItem('birthdays')
+  const localBirthdays = localStorage.getItem(KEY_LOCAL_BIRTHDAYS)
 
   if (localBirthdays) {
     return JSON.parse(localBirthdays) as Birthday[]
@@ -76,19 +83,30 @@ export const getBirthdays = async (): Promise<Birthday[]> => {
     i => moment(i.birthday).format('MM') == month
   )
 
-  localStorage.setItem('birthdays', JSON.stringify(birthdaysOnlyMonth))
+  localStorage.setItem(KEY_LOCAL_BIRTHDAYS, JSON.stringify(birthdaysOnlyMonth))
 
   return birthdaysOnlyMonth
 }
 
-export const getImages = async () => {
+export const getImages = async (): Promise<Image[]> => {
+  const localImages = localStorage.getItem(KEY_LOCAL_GALLERY)
+
+  if (localImages) {
+    return JSON.parse(localImages) as Image[]
+  }
+
   const web = new Web(URL_SITE)
-  const result = await web.lists
+  const result = (await web.lists
     .getByTitle(URL_IMAGES_LIST)
     .items.select('ID', 'Title')
-    .getAll()
+    .getAll()) as ImagesResponse
 
-  return result
+  const images = result.map(i => {
+    return { id: i.ID, url: i.Title }
+  })
+
+  localStorage.setItem(KEY_LOCAL_GALLERY, JSON.stringify(images))
+  return images
 }
 
 export const sendMessage = async (item: MessageListItem) => {
