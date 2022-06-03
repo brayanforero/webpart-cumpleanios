@@ -198,10 +198,11 @@ button {
 }
 
 .webpart-modal__gallery {
-  padding: 1em;
+  padding: 2em;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  overflow-y: auto;
 }
 
 .webpart-modal__gallery img {
@@ -209,4 +210,14 @@ button {
   width: 140px;
   height: 140px;
   margin: 0;
+  border-radius: 0.25em;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+.webpart-modal__gallery img.selected {
+  outline: 4px solid hsl(130, 50%, 50%);
+  opacity: 1;
 }
